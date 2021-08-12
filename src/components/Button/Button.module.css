@@ -1,0 +1,15 @@
+.btn {
+	width: 100%;
+	background-color: var(--tertiaryColor);
+	border: none;
+	padding: 12px 15px;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: 600;
+	font-size: 0.8rem;
+	letter-spacing: 1px;
+}
+
+.btn:hover {
+	opacity: 0.9;
+}

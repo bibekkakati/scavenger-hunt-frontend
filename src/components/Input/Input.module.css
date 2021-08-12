@@ -1,0 +1,16 @@
+.inputBox {
+	width: 90%;
+	height: 20px;
+	padding: 12px;
+	border-radius: 4px;
+	border: solid 2px #c5d1d4;
+	color: var(--secondaryColor);
+	font-weight: 600;
+	font-style: 0.8rem;
+	letter-spacing: 1px;
+	opacity: 0.95;
+}
+
+.inputBox:focus {
+	border-color: var(--secondaryColor);
+}

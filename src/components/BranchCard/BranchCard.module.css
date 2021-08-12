@@ -1,0 +1,86 @@
+.main {
+	width: 240px;
+	height: 180px;
+	overflow: hidden;
+	background-color: var(--primaryColor);
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px 1px #e2e2e2;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+
+.sectionOne {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.branchid,
+.branchname {
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #fff;
+	text-transform: capitalize;
+	letter-spacing: 0.5px;
+}
+
+.branchname {
+	border-bottom: solid 2px var(--tertiaryColor);
+}
+
+.label {
+	font-weight: 700;
+	color: var(--tertiaryColor);
+	font-size: 0.7rem;
+	margin-right: 5px;
+}
+
+.sectionTwo {
+	display: flex;
+	flex-direction: column;
+}
+
+.address,
+.city {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: #fff;
+	text-transform: capitalize;
+	letter-spacing: 0.5px;
+}
+
+.sectionThree {
+	display: flex;
+	flex-direction: column;
+}
+
+.inchargename,
+.institutionname {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: #fff;
+	text-transform: capitalize;
+	letter-spacing: 0.5px;
+}
+
+.contacts {
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	column-gap: 5px;
+	row-gap: 5px;
+}
+
+.number {
+	font-size: 0.7rem;
+	font-weight: 600;
+	color: #fff;
+	text-transform: capitalize;
+	border: solid 0.5px #fff;
+	padding: 2px 2px;
+	border-radius: 2px;
+	opacity: 0.8;
+}
