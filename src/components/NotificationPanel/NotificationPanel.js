@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NotificationManager from "../../apiManager/managers/notificationManager";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
+import socket from "../../socketManager/socketClient";
 import * as styles from "./NotificationPanel.module.css";
 
 const NavTitles = {
@@ -8,7 +8,7 @@ const NavTitles = {
 	reads: "Reads",
 };
 
-export default function NotificationPanel({ closeNotificationPanel }) {
+export default function NotificationPanel() {
 	const [navTitle, setNavTitle] = useState(NavTitles.unreads);
 	const [data, setData] = useState({
 		reads: {},
@@ -34,9 +34,22 @@ export default function NotificationPanel({ closeNotificationPanel }) {
 		}
 	}, []);
 
+	const invokeCountListener = useCallback(() => {
+		socket.on("notification:message", (message) => {
+			const { reads, unreads } = data;
+			unreads[message.id] = message;
+			setData({ reads, unreads });
+		});
+		// eslint-disable-next-line
+	}, []);
+
 	useEffect(() => {
 		getAllNotifications();
 	}, [getAllNotifications]);
+
+	useEffect(() => {
+		invokeCountListener();
+	}, [invokeCountListener]);
 
 	const handleMarkAsRead = async (id) => {
 		const [response, error] =
@@ -47,7 +60,7 @@ export default function NotificationPanel({ closeNotificationPanel }) {
 			const v = unreads[id];
 			if (v) reads[id] = v;
 			delete unreads[id];
-			setData({ reads, unreads });
+			return setData({ reads, unreads });
 		}
 		return alert(response?.message || "Couldn't mark it as read");
 	};
@@ -74,11 +87,8 @@ export default function NotificationPanel({ closeNotificationPanel }) {
 		));
 	};
 
-	const panelRef = useRef(null);
-	useOnClickOutside(panelRef, closeNotificationPanel);
-
 	return (
-		<div ref={panelRef} className={styles.notificationpanel}>
+		<div className={styles.notificationpanel}>
 			<div className={styles.navs}>
 				<button
 					className={styles.navTitle}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import AuthManager from "../apiManager/managers/authManager";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
@@ -26,14 +26,13 @@ export default function Loginpage() {
 			if (token && role) {
 				user.setAuthToken(token);
 				user.setUserRole(role);
-				history.replace("/dashboard");
-				return;
+				return history.replace("/dashboard");
 			}
 		}
-		return alert(response.message);
+		return alert(response?.message);
 	};
 
-	if (user.getAuthToken()) return history.replace("/dashboard");
+	if (user.getAuthToken()) return <Redirect to="/dashboard" />;
 
 	return (
 		<Layout>

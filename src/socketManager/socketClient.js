@@ -18,9 +18,4 @@ socket.on("disconnect", (reason) => {
 	console.log(`Socket connection closed #${reason}`);
 });
 
-socket.on("notification:count", (data) => {
-	console.log(data);
-});
-socket.on("notification:message", (data) => {
-	console.log(data);
-});
+export default socket;

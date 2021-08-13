@@ -5,15 +5,19 @@ import Layout from "../components/Layout/Layout";
 import NotificationPanel from "../components/NotificationPanel/NotificationPanel";
 import Roles from "../constants/Roles";
 import user from "../helpers/user";
+import useOnClickOutside from "../hooks/useOnClickOutside";
 import "../socketManager/socketClient";
+import socket from "../socketManager/socketClient";
 import * as styles from "../styles/DashboardPage.module.css";
 
 export default function DashboardPage() {
 	const isAdmin = user.getUserRole() === Roles.admin;
 	const notificationIconRef = useRef(null);
+	const panelRef = useRef(null);
 	const [branches, setBranches] = useState([]);
 	const [count, setCount] = useState(0);
 	const [showNotificationPanel, setNotificationPanel] = useState(false);
+
 	const fetchData = useCallback(async () => {
 		const request = isAdmin
 			? BranchManager.getAllBranches
@@ -23,13 +27,19 @@ export default function DashboardPage() {
 		if (response && response.success) {
 			return setBranches(response.data);
 		}
-		return alert(response?.message || "Something went wrong.");
 	}, [isAdmin]);
+
+	const invokeCountListener = useCallback(() => {
+		socket.on("notification:count", (count) => {
+			setCount(count);
+		});
+	}, []);
 
 	useEffect(() => {
 		fetchData();
 		notificationIconRef.current.onclick = handleNotificationPanel;
-	}, [fetchData]);
+		invokeCountListener();
+	}, [fetchData, invokeCountListener]);
 
 	const handleNotificationPanel = () => {
 		setNotificationPanel((val) => !val);
@@ -39,6 +49,8 @@ export default function DashboardPage() {
 		user.logoutUser();
 	};
 
+	useOnClickOutside(panelRef, () => setNotificationPanel(false));
+
 	return (
 		<Layout>
 			<div className={styles.main}>
@@ -46,22 +58,14 @@ export default function DashboardPage() {
 					<p className={styles.heading}>
 						{isAdmin ? "All Branches" : "Branch Details"}
 					</p>
-					<div className={styles.actions}>
-						<div
-							ref={notificationIconRef}
-							className={styles.notification}
-						>
+					<div ref={panelRef} className={styles.actions}>
+						<div className={styles.notification}>
 							{count ? (
 								<p className={styles.count}>{count}</p>
 							) : null}
-							{showNotificationPanel && (
-								<NotificationPanel
-									closeNotificationPanel={
-										handleNotificationPanel
-									}
-								/>
-							)}
+							{showNotificationPanel && <NotificationPanel />}
 							<img
+								ref={notificationIconRef}
 								src="/images/bell.png"
 								alt="Notification"
 								height="24"

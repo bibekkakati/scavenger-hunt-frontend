@@ -2,11 +2,13 @@
 	position: absolute;
 	top: 50px;
 	border-radius: 4px;
-	background-color: var(--primaryColor);
-	box-shadow: 1px 1px 5px 1px #e2e2e2;
+	background-color: #fff;
+
 	width: 220px;
 	max-height: 400px;
 	overflow-y: scroll;
+	z-index: 100;
+	border: solid 1px var(--secondaryColor);
 }
 
 .navs {
@@ -18,13 +20,13 @@
 
 .navTitle {
 	flex: 1;
-	color: #fff;
+	color: var(--secondaryColor);
 	font-weight: 700;
 	font-size: 0.8rem;
 	padding: 8px 0;
 	border-bottom: solid 2px var(--tertiaryColor);
 	text-align: center;
-	background-color: transparent;
+	background-color: #fff;
 }
 
 .navTitle[data-active="true"] {
@@ -39,10 +41,10 @@
 }
 
 .message {
-	color: #fff;
+	color: var(--secondaryColor);
 	font-weight: 500;
 	font-size: 0.7rem;
-	border-bottom: solid 1px #fff;
+	border-bottom: solid 1px var(--secondaryColor);
 	padding: 12px 0;
 }
 

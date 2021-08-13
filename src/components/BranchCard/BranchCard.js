@@ -10,8 +10,7 @@ export default function BranchCard({
 	inchargename,
 	institutionname,
 }) {
-	// contact = contact && contact.split(",");
-	contact = ["8876058567", "6000173710", "9876524130", "124578993"];
+	contact = contact && contact.split(",");
 	return (
 		<div className={styles.main}>
 			<div className={styles.sectionOne}>
