@@ -17,7 +17,7 @@ const getUserRole = () => {
 const logoutUser = () => {
 	window.localStorage.removeItem("token");
 	window.localStorage.removeItem("role");
-	window.location.replace("/");
+	window.location.replace("/login");
 };
 
 const user = {

@@ -1,0 +1,66 @@
+.notificationpanel {
+	position: absolute;
+	top: 50px;
+	border-radius: 4px;
+	background-color: var(--primaryColor);
+	box-shadow: 1px 1px 5px 1px #e2e2e2;
+	width: 220px;
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+.navs {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.navTitle {
+	flex: 1;
+	color: #fff;
+	font-weight: 700;
+	font-size: 0.8rem;
+	padding: 8px 0;
+	border-bottom: solid 2px var(--tertiaryColor);
+	text-align: center;
+	background-color: transparent;
+}
+
+.navTitle[data-active="true"] {
+	color: var(--tertiaryColor);
+}
+
+.messages {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+	padding: 0 10px;
+}
+
+.message {
+	color: #fff;
+	font-weight: 500;
+	font-size: 0.7rem;
+	border-bottom: solid 1px #fff;
+	padding: 12px 0;
+}
+
+.info {
+	color: var(--secondaryColor);
+	font-weight: 700;
+	font-size: 1rem;
+	padding: 12px 0;
+	text-align: center;
+	margin: 50px 0;
+}
+
+.markBtn {
+	color: var(--tertiaryColor);
+	text-align: left;
+	cursor: pointer;
+	margin-top: 5px;
+	background-color: transparent;
+	font-weight: 500;
+	font-size: 0.7rem;
+}

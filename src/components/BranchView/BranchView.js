@@ -6,11 +6,7 @@ export default function BranchView({ branches }) {
 	return (
 		<div className={styles.cards}>
 			{branches.map((data, idx) => (
-				<>
-					<BranchCard key={idx} {...data} />
-					<BranchCard key={idx} {...data} />
-					<BranchCard key={idx} {...data} />
-				</>
+				<BranchCard key={idx} {...data} />
 			))}
 		</div>
 	);

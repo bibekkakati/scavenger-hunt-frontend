@@ -1,6 +1,5 @@
 import axios from "axios";
-// import { getToken } from "../helpers/authToken";
-// import { logoutUser } from "../helpers/user";
+import user from "../helpers/user";
 
 let apiClient = null;
 
@@ -20,10 +19,10 @@ class ApiClient {
 
 		apiClient.interceptors.request.use(
 			async (config) => {
-				// const token = getToken() || "";
-				// if (token) {
-				// 	config.headers.Authorization = `Bearer ${token}`;
-				// }
+				const token = user.getAuthToken() || "";
+				if (token) {
+					config.headers.Authorization = `Bearer ${token}`;
+				}
 				return config;
 			},
 			(err) => {
@@ -38,7 +37,7 @@ class ApiClient {
 			(err) => {
 				if (err.response) {
 					if (err.response.data.expired) {
-						// logoutUser();
+						user.logoutUser();
 					}
 					return [undefined, "Something went wrong"];
 				}

@@ -1,20 +1,16 @@
 import { Redirect, Route } from "react-router-dom";
 import user from "../../helpers/user";
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ component: Component, ...rest }) {
 	const isLoggedin = user.getAuthToken();
 	return (
 		<Route
 			{...rest}
-			render={() => {
+			render={(props) => {
 				return isLoggedin ? (
-					children
+					<Component {...props} />
 				) : (
-					<Redirect
-						to={{
-							pathname: "/login",
-						}}
-					/>
+					<Redirect to="/login" />
 				);
 			}}
 		/>
