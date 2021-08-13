@@ -26,12 +26,14 @@ export default function Loginpage() {
 			if (token && role) {
 				user.setAuthToken(token);
 				user.setUserRole(role);
-				// history.replace("/dashboard");
+				history.replace("/dashboard");
 				return;
 			}
 		}
 		return alert(response.message);
 	};
+
+	if (user.getAuthToken()) return history.replace("/dashboard");
 
 	return (
 		<Layout>
