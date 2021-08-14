@@ -48,6 +48,13 @@
 	padding: 12px 0;
 }
 
+.dt {
+	font-size: 0.5rem;
+	font-weight: 500;
+	color: #adadad;
+	margin-top: 2px;
+}
+
 .info {
 	color: var(--secondaryColor);
 	font-weight: 700;
@@ -58,11 +65,13 @@
 }
 
 .markBtn {
-	color: var(--tertiaryColor);
+	color: #fff;
 	text-align: left;
 	cursor: pointer;
 	margin-top: 5px;
-	background-color: transparent;
+	background-color: var(--tertiaryColor);
 	font-weight: 500;
-	font-size: 0.7rem;
+	font-size: 0.6rem;
+	padding: 2px 4px;
+	border-radius: 4px;
 }

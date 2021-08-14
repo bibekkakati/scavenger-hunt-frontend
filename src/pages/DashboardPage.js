@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BranchManager from "../apiManager/managers/branchManager";
+import NotificationManager from "../apiManager/managers/notificationManager";
 import BranchView from "../components/BranchView/BranchView";
 import Layout from "../components/Layout/Layout";
 import NotificationPanel from "../components/NotificationPanel/NotificationPanel";
@@ -29,14 +30,24 @@ export default function DashboardPage() {
 		}
 	}, [isAdmin]);
 
+	const fetchNotificationCount = useCallback(async () => {
+		const [response, error] =
+			await NotificationManager.getNotificationCount();
+		if (error) return alert("Notification Count: ", error);
+		if (response && response.success) {
+			return setCount(response.count);
+		}
+	}, []);
+
 	socket.on("notification:count", (count) => {
 		setCount(count);
 	});
 
 	useEffect(() => {
 		fetchData();
+		fetchNotificationCount();
 		notificationIconRef.current.onclick = handleNotificationPanel;
-	}, [fetchData]);
+	}, [fetchData, fetchNotificationCount]);
 
 	const handleNotificationPanel = () => {
 		setNotificationPanel((val) => !val);

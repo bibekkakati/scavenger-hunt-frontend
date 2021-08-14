@@ -69,10 +69,15 @@ export default function NotificationPanel() {
 		const start = li.length - 1;
 		const messages = [];
 		for (let i = start; i >= 0; i--) {
-			const { message, id } = li[i];
+			const { message, id, timestamp } = li[i];
+			let date = new Date(parseInt(timestamp)).toLocaleDateString();
+			let time = new Date(parseInt(timestamp)).toLocaleTimeString();
 			messages.push(
 				<div key={id} className={styles.message}>
 					{message}
+					<p className={styles.dt}>
+						Time: {time} | Date: {date}
+					</p>
 					{navTitle === NavTitles.unreads ? (
 						<button
 							className={styles.markBtn}
