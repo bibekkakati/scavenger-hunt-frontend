@@ -16,13 +16,16 @@ function SearchBranchPage(props) {
 
 	const getBranches = useCallback(async () => {
 		if (pincode) {
+			setBranches([]);
 			const [response, error] = await BranchManager.searchBranchByPincode(
 				pincode
 			);
 			if (error) return error;
 			if (response && response.success) {
-				return setBranches(response.data);
+				const data = response.data;
+				return setBranches(data);
 			}
+			return alert(`We are not serving in the pincode ${pincode}`);
 		}
 	}, [pincode]);
 

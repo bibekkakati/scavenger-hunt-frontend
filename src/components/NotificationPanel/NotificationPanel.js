@@ -15,6 +15,12 @@ export default function NotificationPanel() {
 		unreads: {},
 	});
 
+	socket.on("notification:message", (message) => {
+		const messages = { ...data };
+		messages.unreads[message.id] = message;
+		setData(messages);
+	});
+
 	const getAllNotifications = useCallback(async () => {
 		const [response, error] =
 			await NotificationManager.getAllNotifications();
@@ -34,22 +40,9 @@ export default function NotificationPanel() {
 		}
 	}, []);
 
-	const invokeCountListener = useCallback(() => {
-		socket.on("notification:message", (message) => {
-			const { reads, unreads } = data;
-			unreads[message.id] = message;
-			setData({ reads, unreads });
-		});
-		// eslint-disable-next-line
-	}, []);
-
 	useEffect(() => {
 		getAllNotifications();
 	}, [getAllNotifications]);
-
-	useEffect(() => {
-		invokeCountListener();
-	}, [invokeCountListener]);
 
 	const handleMarkAsRead = async (id) => {
 		const [response, error] =
@@ -72,19 +65,26 @@ export default function NotificationPanel() {
 				: Object.values(data.reads);
 		if (li.length === 0)
 			return <p className={styles.info}>No notifications found</p>;
-		return li.map(({ message, id }) => (
-			<div key={id} className={styles.message}>
-				{message}
-				{navTitle === NavTitles.unreads ? (
-					<button
-						className={styles.markBtn}
-						onClick={() => handleMarkAsRead(id)}
-					>
-						Mark as read
-					</button>
-				) : null}
-			</div>
-		));
+
+		const start = li.length - 1;
+		const messages = [];
+		for (let i = start; i >= 0; i--) {
+			const { message, id } = li[i];
+			messages.push(
+				<div key={id} className={styles.message}>
+					{message}
+					{navTitle === NavTitles.unreads ? (
+						<button
+							className={styles.markBtn}
+							onClick={() => handleMarkAsRead(id)}
+						>
+							Mark as read
+						</button>
+					) : null}
+				</div>
+			);
+		}
+		return messages;
 	};
 
 	return (

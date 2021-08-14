@@ -29,17 +29,14 @@ export default function DashboardPage() {
 		}
 	}, [isAdmin]);
 
-	const invokeCountListener = useCallback(() => {
-		socket.on("notification:count", (count) => {
-			setCount(count);
-		});
-	}, []);
+	socket.on("notification:count", (count) => {
+		setCount(count);
+	});
 
 	useEffect(() => {
 		fetchData();
 		notificationIconRef.current.onclick = handleNotificationPanel;
-		invokeCountListener();
-	}, [fetchData, invokeCountListener]);
+	}, [fetchData]);
 
 	const handleNotificationPanel = () => {
 		setNotificationPanel((val) => !val);
