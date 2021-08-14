@@ -14,6 +14,8 @@ export default function NotificationPanel() {
 		reads: {},
 		unreads: {},
 	});
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState("");
 
 	socket.on("notification:message", (message) => {
 		const messages = { ...data };
@@ -24,7 +26,9 @@ export default function NotificationPanel() {
 	const getAllNotifications = useCallback(async () => {
 		const [response, error] =
 			await NotificationManager.getAllNotifications();
-		if (error) return alert(error);
+		if (error) {
+			return setError(error);
+		}
 		if (response && response.success) {
 			const readsList = response.data.reads;
 			const unreadsList = response.data.unreads;
@@ -37,7 +41,10 @@ export default function NotificationPanel() {
 				unreads[unreadsList[i].id] = unreadsList[i];
 			}
 			setData({ reads, unreads });
+			setLoading(false);
+			return;
 		}
+		return setError(response?.message || "Couldn't fetch notifications");
 	}, []);
 
 	useEffect(() => {
@@ -59,6 +66,9 @@ export default function NotificationPanel() {
 	};
 
 	const viewMessages = () => {
+		if (error) return <p className={styles.info}>{error}</p>;
+		if (loading)
+			return <p className={styles.info}>Fetching Notifications</p>;
 		const li =
 			navTitle === NavTitles.unreads
 				? Object.values(data.unreads)
